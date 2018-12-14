@@ -1,4 +1,4 @@
-#!/usr/bin/python3
+#!/usr/bin/python2
 # -*- coding: utf-8 -*-
 # vim: noai:ts=4:sw=4:expandtab
 #
@@ -85,6 +85,7 @@ class RpmConf(object):
         self.selinux = selinux
         self.debug = debug
         self.test = test
+        logging.basicConfig()
         self.logger = logging.getLogger("rpmconf")
         self.logger.setLevel(logging.INFO)
 
@@ -119,7 +120,7 @@ class RpmConf(object):
                 termios.tcsetattr(sys.stdin, termios.TCSANOW, old_settings)
         # BZ 1237075 workaround
         signal.signal(signal.SIGINT, signal.default_int_handler)
-        return input(question)
+        return raw_input(question)
 
     @staticmethod
     def get_list_of_config(package):
@@ -285,7 +286,7 @@ class RpmConf(object):
                 self.logger.error("You did not selected any frontend for merge.\n" +
                                   "      Define it with environment variable 'MERGE' or flag -f.")
                 sys.exit(2)
-        except FileNotFoundError as err:
+        except IOError as err:
             sys.stderr.write("{0}\n".format(err.strerror))
             sys.exit(4)
 

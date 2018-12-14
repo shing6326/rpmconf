@@ -11,40 +11,40 @@ Source0:        %{name}-%{version}.tar.gz
 BuildArch:      noarch
 BuildRequires:  docbook-utils
 BuildRequires:  docbook-dtd31-sgml
-BuildRequires:  python3-sphinx
-BuildRequires:  python3-devel
+BuildRequires:  python2-sphinx
+BuildRequires:  python-devel
 Requires:       %{name}-base
-Requires:       python3-rpmconf
-Requires:       rpm-python3
-BuildRequires:  rpm-python3
+Requires:       python2-rpmconf
+Requires:       rpm-python
+BuildRequires:  rpm-python
 #check
-BuildRequires:  python3-pylint
-BuildRequires:  python3-six
+BuildRequires:  python2-pylint
+BuildRequires:  python2-six
 # mergetools
-Suggests: diffuse 
-Suggests: kdiff3
-Suggests: meld
-Suggests: vim-X11
-Suggests: vim-enhanced
+#Suggests: diffuse
+#Suggests: kdiff3
+#Suggests: meld
+#Suggests: vim-X11
+#Suggests: vim-enhanced
 
 %description
 This tool search for .rpmnew, .rpmsave and .rpmorig files and ask you what to do
 with them:
 Keep current version, place back old version, watch the diff or merge.
 
-%package -n python3-rpmconf
+%package -n python2-rpmconf
 Summary:        Python interface for %{name}
 BuildArch:      noarch
 
-%description -n python3-rpmconf
+%description -n python2-rpmconf
 Python interface for %{name}. Mostly useful for developers only.
 
-%package -n python3-rpmconf-doc
+%package -n python2-rpmconf-doc
 Summary:        Documentation of python interface for %{name}
 BuildArch:      noarch
 
-%description -n python3-rpmconf-doc
-Documentation generated from code of python3-rpmconf.
+%description -n python2-rpmconf-doc
+Documentation generated from code of python2-rpmconf.
 
 %package base
 Summary: Filesystem for %{name}
@@ -57,12 +57,12 @@ Directory hierarchy for installation scripts, which are handled by rpmconf.
 %setup -q
 
 %build
-%{__python3} setup.py build
+%{__python2} setup.py build
 docbook2man rpmconf.sgml
 make -C docs html man
 
 %install
-%{__python3} setup.py install --skip-build \
+%{__python2} setup.py install --skip-build \
     --install-scripts %{_sbindir} \
     --root %{buildroot}
 install -D -m 644 rpmconf.8 %{buildroot}%{_mandir}/man8/rpmconf.8
@@ -77,13 +77,13 @@ pylint-3.6 rpmconf bin/rpmconf || :
 %{_sbindir}/rpmconf
 %{_mandir}/man8/rpmconf.8*
 
-%files -n python3-rpmconf
+%files -n python2-rpmconf
 %license LICENSE
-%{python3_sitelib}/rpmconf/
-%{python3_sitelib}/rpmconf-*.egg-info
+%{python2_sitelib}/rpmconf/
+%{python2_sitelib}/rpmconf-*.egg-info
 %{_mandir}/man3/rpmconf.3*
 
-%files -n python3-rpmconf-doc
+%files -n python2-rpmconf-doc
 %license LICENSE
 %doc docs/build/html/
 
